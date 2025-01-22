@@ -5,6 +5,7 @@ import CustomList from './CustomList';
 import CustomSelect from './CustomSelect/CustomSelect';
 import Summary from './Summary';
 import SensorGroups from './SensorGroups';
+import utils from '../utils/utils';
 
 import api from '../api/api';
 
@@ -34,6 +35,52 @@ export default function SensorExplorer() {
   const [selectedSensor, setSelectedSensor] = React.useState<string>(
     sensors[0]
   );
+
+  const currentSensorPrefix = utils.extractSensorPrefix(selectedSensor);
+
+  // console.log('selectedSensor')
+  // console.log(selectedSensor)
+
+  // console.log('currentSensorPrefix')
+  // console.log(currentSensorPrefix)
+
+  const allGroupsCount = React.useMemo(() => {
+    if (!sensorsData?.groupsBySensor) return 0;
+
+    const allGroups = Object.values(sensorsData.groupsBySensor).flat();
+    const allGroupsByPrefix = allGroups.filter(
+      (group: any) => utils.extractSensorPrefix(group) === currentSensorPrefix
+    );
+
+    console.log('allGroupsByPrefix', allGroupsByPrefix);
+
+    return allGroupsByPrefix.length;
+  }, [sensorsData, currentSensorPrefix]);
+
+  if (sensorsData?.groupsBySensor) {
+    const allGroups = Object.values(sensorsData?.groupsBySensor)?.flat();
+    const allGroupsByPrefix = allGroups?.filter((group: any) => {
+      return utils.extractSensorPrefix(group) === currentSensorPrefix;
+    });
+
+    console.log('allGroupsByPrefix');
+    console.log(allGroupsByPrefix);
+  }
+
+  // console.log('sensorsData?.groupsBySensor')
+  // console.log(sensorsData?.groupsBySensor)
+
+  // const groupsByPrefix = sensorsData?.groupsBySensor?.filter((sensor:any)=>{
+  //   console.log('sensor')
+  //   console.log(sensor)
+  //   return sensor
+  // })
+
+  // console.log('currentSensorPrefix')
+  // console.log(currentSensorPrefix)
+
+  // console.log('sensorsData')
+  // console.log(sensorsData)
 
   React.useEffect(() => {
     const getGroupsBySensor = async () => {
@@ -75,10 +122,16 @@ export default function SensorExplorer() {
         <span>is composed by:</span>
       </div>
 
-      <CustomList listData={sensorsData?.groupsBySensor[selectedSensor]}/>
+      {sensorsData?.groupsBySensor?.[selectedSensor] && (
+        <CustomList listData={sensorsData.groupsBySensor[selectedSensor]} />
+      )}
+
+      <SensorGroups
+        prefix={currentSensorPrefix}
+        numberOfGroups={allGroupsCount}
+      />
     </div>
 
-    // TODO: Uncomment once part 1 is complete
-    // <SensorGroups />
+    //
   );
 }

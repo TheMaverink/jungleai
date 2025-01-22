@@ -1,0 +1,105 @@
+.cs-select-wrapper {
+  position: relative;
+  user-select: none;
+  width: 100%;
+}
+.cs-select {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.cs-select__trigger {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: 300;
+  color: #aeaeba;
+  line-height: 32px;
+  background: #303438;
+  cursor: pointer;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  border-color: #696c6f;
+  border-radius: 8px;
+}
+
+.cs-select__trigger.placeholder {
+  color: #636363;
+}
+
+.cs-custom-options {
+  position: absolute;
+  display: block;
+  top: 100%;
+  left: 0;
+  right: 0;
+  border: 1px solid #696c6f;
+  border-radius: 4px;
+  border-top: 0;
+  background: #303438;
+  transition: all 0.5s;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+.cs-select.open .cs-custom-options {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+.cs-custom-option {
+  position: relative;
+  display: block;
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: 300;
+  color: #aeaeba;
+  line-height: 32px;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+.cs-custom-option:hover {
+  cursor: pointer;
+  background-color: #232629;
+  border-radius: 4px;
+}
+.cs-custom-option.selected {
+  color: #ffcc0d;
+}
+
+.cs-arrow {
+  position: relative;
+  height: 15px;
+  width: 15px;
+}
+.cs-arrow::before,
+.cs-arrow::after {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  width: 0.15rem;
+  height: 100%;
+  transition: all 0.5s;
+}
+.cs-arrow::before {
+  left: -5px;
+  transform: rotate(45deg);
+  background-color: #696c6f;
+}
+.cs-arrow::after {
+  left: 5px;
+  transform: rotate(-45deg);
+  background-color: #696c6f;
+}
+.open .cs-arrow::before {
+  left: -5px;
+  transform: rotate(-45deg);
+}
+.open .cs-arrow::after {
+  left: 5px;
+  transform: rotate(45deg);
+}
